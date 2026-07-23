@@ -1,5 +1,38 @@
 
 const menu=document.querySelector('.menubtn'),nav=document.querySelector('.nav');if(menu&&nav){menu.addEventListener('click',()=>nav.classList.toggle('open'));nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')))}
+const setupNavigationTabs=()=>{
+  document.querySelectorAll('.nav').forEach((navigation)=>{
+    const links=[...navigation.querySelectorAll('a')];
+    if(!links.length)return;
+
+    const menuContainer=document.createElement('div');
+    menuContainer.className='nav-effect-container';
+    links.forEach((link)=>{
+      link.classList.add('nav-effect-btn');
+      menuContainer.append(link);
+    });
+    const outline=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    outline.classList.add('nav-tab-outline');
+    outline.setAttribute('viewBox','0 0 400 60');
+    outline.setAttribute('preserveAspectRatio','none');
+    outline.setAttribute('overflow','visible');
+    outline.setAttribute('aria-hidden','true');
+    outline.innerHTML='<rect class="nav-tab-outline__rect" pathLength="100" x="0" y="0" width="400" height="60" fill="transparent" stroke-width="5" />';
+    menuContainer.append(outline);
+    navigation.append(menuContainer);
+    navigation.classList.add('nav-tabs');
+
+    links.forEach((link,index)=>{
+      const setOutlineState=()=>navigation.dataset.outlineTarget=String(index+1);
+      link.addEventListener('pointerenter',setOutlineState);
+      link.addEventListener('focus',setOutlineState);
+    });
+    navigation.addEventListener('pointerleave',()=>{
+      delete navigation.dataset.outlineTarget;
+    });
+  });
+};
+setupNavigationTabs();
 const drawer=document.querySelector('.drawer'),back=document.querySelector('.backdrop');function openCart(){drawer?.style.removeProperty('transform');back?.style.removeProperty('opacity');drawer?.classList.add('open');back?.classList.add('open');document.body.style.overflow='hidden'}function closeCart(){drawer?.classList.remove('open');back?.classList.remove('open');drawer?.style.removeProperty('transform');back?.style.removeProperty('opacity');document.body.style.overflow=''}
 
 /* Shopify-style header actions: search, account, wishlist and cart drawer. */
