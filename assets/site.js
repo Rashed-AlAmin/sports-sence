@@ -5,6 +5,24 @@ const drawer=document.querySelector('.drawer'),back=document.querySelector('.bac
 /* Shopify-style header actions: search, account, wishlist and cart drawer. */
 const icon={search:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.2 4.2"/></svg>',account:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.7"/><path d="M4.5 20c.9-4 3.5-6.1 7.5-6.1s6.6 2.1 7.5 6.1"/></svg>',heart:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 5.8a5 5 0 0 0-7.1 0L12 7.1l-1.3-1.3a5 5 0 1 0-7.1 7.1L12 21l8.4-8.1a5 5 0 0 0 0-7.1Z"/></svg>',bag:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>',close:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>',trash:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M9 7l1-2h4l1 2M6 7l1 13h10l1-13"/></svg>'};
 const pagePath=location.pathname.includes('/pages/')?'':'pages/';
+const pageLoader=document.createElement('div');
+pageLoader.className='page-loader';
+pageLoader.setAttribute('role','status');
+pageLoader.setAttribute('aria-label','Loading SportSense');
+pageLoader.innerHTML='<div class="page-loader__mark" aria-hidden="true"><span class="page-loader__ball" style="--delay:0s"></span><span class="page-loader__ball" style="--delay:.14s"></span><span class="page-loader__ball" style="--delay:.28s"></span><span class="page-loader__shadow" style="--delay:0s"></span><span class="page-loader__shadow" style="--delay:.14s"></span><span class="page-loader__shadow" style="--delay:.28s"></span></div>';
+document.body.prepend(pageLoader);
+let pageLoaderDismissed=false;
+const dismissPageLoader=()=>{
+  if(pageLoaderDismissed) return;
+  pageLoaderDismissed=true;
+  pageLoader.classList.add('is-ready');
+  setTimeout(()=>pageLoader.remove(),450);
+};
+const loaderFallback=setTimeout(dismissPageLoader,3000);
+window.addEventListener('load',()=>{
+  clearTimeout(loaderFallback);
+  setTimeout(dismissPageLoader,1500);
+},{once:true});
 document.querySelectorAll('.hactions').forEach((actions)=>{
   actions.innerHTML=`<button class="header-action" type="button" aria-label="Search" data-search-toggle>${icon.search}</button><a class="header-action" href="${pagePath}portal.html" aria-label="Your account">${icon.account}</a><button class="header-action" type="button" aria-label="Wishlist" aria-pressed="false" data-wishlist-toggle>${icon.heart}<span class="action-tooltip">Wishlist</span></button><button class="header-action cart-action" type="button" aria-label="Open cart" data-open-cart>${icon.bag}<span class="cartcount">0</span><span class="action-tooltip">Cart</span></button>`;
 });
