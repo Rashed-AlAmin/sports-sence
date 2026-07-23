@@ -734,7 +734,7 @@ body{
 .header-action:hover{border-color:var(--orange);background:#fff8e9;transform:translateY(-2px)}
 .header-action[aria-pressed="true"]{border-color:var(--orange);background:#fff1cf;color:var(--orange2)}
 .header-action[aria-pressed="true"] svg{fill:currentColor}.cart-action{background:var(--ink);border-color:var(--ink);color:#fff}.cart-action:hover{background:var(--orange);border-color:var(--orange);color:var(--ink)}
-.cart-action .cartcount{left:70%;right:auto;top:4px;width:18px;height:18px;border:2px solid #fff;color:var(--ink);background:var(--orange);font-size:9px;transform:translateX(-50%)}.action-tooltip{position:absolute;right:0;top:calc(100% + 9px);padding:5px 8px;border-radius:6px;color:#fff;background:var(--ink);font-size:9px;font-weight:800;opacity:0;pointer-events:none;transform:translateY(-4px);transition:.18s}.header-action:hover .action-tooltip{opacity:1;transform:translateY(0)}
+.cart-action .cartcount{left:70%;right:auto;top:4px;width:18px;height:18px; ;color:var(--ink);background:var(--orange);font-size:10px;transform:translateX(-50%)}.action-tooltip{position:absolute;right:0;top:calc(100% + 9px);padding:5px 8px;border-radius:6px;color:#fff;background:var(--ink);font-size:9px;font-weight:800;opacity:0;pointer-events:none;transform:translateY(-4px);transition:.18s}.header-action:hover .action-tooltip{opacity:1;transform:translateY(0)}
 
 /* Header utility actions share one calm default state and a branded hover. */
 .header-action{
