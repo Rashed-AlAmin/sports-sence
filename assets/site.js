@@ -45,6 +45,10 @@ document.querySelectorAll('.footer').forEach((footer)=>{
   footer.innerHTML=`<div class="footer-shell"><div class="footer-main"><section class="footer-intro"><a class="brand" href="${pagePath}index.html"><span class="brandmark"></span><span class="brandtext"><span>Sport</span><span>Sense</span></span></a><p>Custom teamwear, promotional products, screen printing and awards made simple for clubs, schools and businesses.</p><span class="footer-location">Brendale, Queensland · Australia-wide</span></section><section class="footer-contact"><h3>Office</h3><p>18 Kremzow Road<br>Brendale QLD 4500<br>Australia</p><a href="mailto:hello@sportsense.com.au">hello@sportsense.com.au</a><a href="tel:+61732050000">+61 7 3205 0000</a></section><nav class="footer-links" aria-label="Footer links"><h3>Explore</h3><a href="${pagePath}apparel.html">Apparel</a><a href="${pagePath}promotional-products.html">Promotional Products</a><a href="${pagePath}screen-printing.html">Screen Printing</a><a href="${pagePath}trophies.html">Trophies & Awards</a><a href="${pagePath}contact.html">Contact</a></nav><section class="footer-newsletter"><h3>Stay in the loop</h3><p>New teamwear ideas, product drops and practical ordering tips.</p><form class="footer-signup"><label class="sr-only" for="footer-email">Email address</label><input id="footer-email" type="email" placeholder="Enter your email" required><button type="submit" aria-label="Subscribe">${footerIcons.arrow}</button></form><div class="footer-socials"><a href="#" aria-label="Facebook">${footerIcons.facebook}</a><a href="#" aria-label="Instagram">${footerIcons.instagram}</a><a href="#" aria-label="LinkedIn">${footerIcons.linkedin}</a></div></section></div><div class="footer-bottom"><span>© 2026 SportSense. All rights reserved.</span><span>Built for clubs, schools & teams.</span></div></div>`;
   footer.querySelector('.footer-signup')?.addEventListener('submit',(event)=>{event.preventDefault();event.currentTarget.classList.add('is-subscribed');event.currentTarget.querySelector('input').value='Thanks — you’re on the list!'});
 });
+const sportSenseLogo='https://sportsense.com.au/cdn/shop/files/SportSense_Logo.png?v=1701154538&width=200';
+document.querySelectorAll('.brand').forEach((brand)=>{
+  brand.innerHTML=`<img class="brand-logo" src="${sportSenseLogo}" alt="SportSense">`;
+});
 const pageLoader=document.createElement('div');
 pageLoader.className='page-loader';
 pageLoader.setAttribute('role','status');
@@ -301,19 +305,6 @@ const sel=document.getElementById('method'),ttl=document.getElementById('arttitl
       scrollTrigger:{
         trigger:'.trust-story-section',
         start:'top 78%'
-      }
-    });
-  }
-
-  const workCards = gsap.utils.toArray('[data-work-card]');
-  if(workCards.length){
-    gsap.from(workCards, {
-      y:60,
-      opacity:0,
-      stagger:.14,
-      scrollTrigger:{
-        trigger:'.featured-work-grid',
-        start:'top 84%'
       }
     });
   }
