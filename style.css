@@ -1186,7 +1186,7 @@ body{
   border-radius:999px;
   color:var(--muted);
   background:#fff;
-  font-size:9px;
+  font-size:14px;
   font-weight:800;
   transition:border-color .28s ease,color .28s ease,background .28s ease;
 }
