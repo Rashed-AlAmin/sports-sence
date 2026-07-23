@@ -360,6 +360,11 @@ body{
 }
 
 .method-teaser-card{
+  --sweep-x:-115%;
+  --sweep-y:0;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
   min-height:360px;
   padding:28px;
   border:1px solid var(--line);
@@ -371,16 +376,65 @@ body{
     border-color .4s ease;
 }
 
+.method-teaser-card[data-hover-direction="right"],
+.directional-hover[data-hover-direction="right"]{
+  --sweep-x:115%;
+  --sweep-y:0;
+}
+
+.method-teaser-card[data-hover-direction="top"],
+.directional-hover[data-hover-direction="top"]{
+  --sweep-x:0;
+  --sweep-y:-115%;
+}
+
+.method-teaser-card[data-hover-direction="bottom"],
+.directional-hover[data-hover-direction="bottom"]{
+  --sweep-x:0;
+  --sweep-y:115%;
+}
+
+.directional-hover{
+  --sweep-x:-115%;
+  --sweep-y:0;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+
+.method-teaser-card:after,
+.directional-hover:before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  z-index:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(245,166,35,.24),rgba(229,143,0,.1) 58%,rgba(245,166,35,.18));
+  transform:translate3d(var(--sweep-x),var(--sweep-y),0);
+  transition:transform .48s cubic-bezier(.16,1,.3,1);
+}
+
+.method-teaser-card>*{
+  position:relative;
+  z-index:1;
+}
+
+.directional-hover .btn-label,
+.directional-hover .btn-arrow{
+  position:relative;
+  z-index:1;
+}
+
+.method-teaser-card.is-directional-hover:after,
+.directional-hover.is-directional-hover:before{
+  transform:translate3d(0,0,0);
+}
+
 .method-teaser-card:hover{
   transform:translateY(-10px);
   border-color:rgba(245,166,35,.45);
   box-shadow:0 24px 58px rgba(26,26,26,.1);
-}
-
-.method-teaser-card--dark{
-  background:var(--ink);
-  color:#fff;
-  border-color:var(--ink);
 }
 
 .method-icon{
@@ -408,10 +462,6 @@ body{
   margin-bottom:7px;
 }
 
-.method-teaser-card--dark .method-number{
-  color:rgba(255,255,255,.24);
-}
-
 .method-teaser-card h3{
   font-size:25px;
   margin-bottom:12px;
@@ -420,10 +470,6 @@ body{
 .method-teaser-card p{
   color:var(--muted);
   font-size:13px;
-}
-
-.method-teaser-card--dark p{
-  color:#bdbdbd;
 }
 
 .method-meta{
@@ -439,10 +485,6 @@ body{
   background:var(--soft);
   font-size:10px;
   font-weight:800;
-}
-
-.method-teaser-card--dark .method-meta span{
-  background:rgba(255,255,255,.1);
 }
 
 .section-cta{

@@ -128,6 +128,33 @@ const sel=document.getElementById('method'),ttl=document.getElementById('arttitl
   updateHeader();
   window.addEventListener('scroll', updateHeader, {passive:true});
 
+  /* Brand-colour sweep follows the side the pointer enters from. */
+  if(!prefersReduced){
+    const getPointerSide = (element, event) => {
+      const rect = element.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
+
+      if(Math.abs(x) > Math.abs(y)) return x < 0 ? 'left' : 'right';
+      return y < 0 ? 'top' : 'bottom';
+    };
+
+    document.querySelectorAll('[data-method-card], .directional-hover').forEach((element)=>{
+      element.addEventListener('pointerenter',(event)=>{
+        element.dataset.hoverDirection = getPointerSide(element, event);
+        element.classList.remove('is-directional-hover');
+        requestAnimationFrame(()=>{
+          if(element.matches(':hover')) element.classList.add('is-directional-hover');
+        });
+      });
+
+      element.addEventListener('pointerleave',(event)=>{
+        element.dataset.hoverDirection = getPointerSide(element, event);
+        element.classList.remove('is-directional-hover');
+      });
+    });
+  }
+
   if(!hasGSAP || prefersReduced) return;
 
   gsap.registerPlugin(ScrollTrigger);
@@ -206,26 +233,6 @@ const sel=document.getElementById('method'),ttl=document.getElementById('arttitl
       }
     });
   });
-
-  /*
-   * Keep the two core homepage grids visible even when ScrollTrigger has not
-   * refreshed yet (for example, on a hard reload or a slow CDN response).
-   * The cards still retain their hover interaction, but content is never
-   * hidden behind a scroll animation.
-   */
-
-  const methodCards = gsap.utils.toArray('[data-method-card]');
-  if(methodCards.length){
-    gsap.from(methodCards, {
-      y:55,
-      opacity:0,
-      stagger:.11,
-      scrollTrigger:{
-        trigger:'.method-teaser-grid',
-        start:'top 83%'
-      }
-    });
-  }
 
   if(document.querySelector('[data-image-reveal]')){
     gsap.from('[data-image-reveal]', {
