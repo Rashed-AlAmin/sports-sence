@@ -94,6 +94,9 @@ document.addEventListener('click',(event)=>{const card=event.target.closest('[da
 document.addEventListener('keydown',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]')||!['Enter',' '].includes(event.key))return;event.preventDefault();openFeaturedProductPage(card)});
 document.querySelectorAll('.faqquestion').forEach(b=>b.addEventListener('click',()=>{const i=b.closest('.faqitem');i.classList.toggle('open');b.querySelector('span:last-child').textContent=i.classList.contains('open')?'−':'+'}));
 document.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{b.parentElement.querySelectorAll('.opt').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')}));
+document.querySelectorAll('[data-product-thumb]').forEach((thumb)=>thumb.addEventListener('click',()=>{const main=document.querySelector('[data-product-main-image]');if(!main)return;main.src=thumb.dataset.image||main.src;main.alt=thumb.dataset.alt||main.alt;document.querySelectorAll('[data-product-thumb]').forEach((item)=>item.classList.toggle('is-selected',item===thumb))}));
+document.querySelectorAll('[data-colour]').forEach((swatch)=>swatch.addEventListener('click',()=>{const selected=document.querySelector('[data-selected-colour]');if(selected)selected.textContent=swatch.dataset.colour||''}));
+document.querySelectorAll('.product-size').forEach((size)=>size.addEventListener('click',()=>{const selected=document.querySelector('[data-selected-size]');if(selected)selected.textContent=size.textContent.trim()}));
 document.querySelectorAll('[data-plus]').forEach(b=>b.addEventListener('click',()=>{const i=b.parentElement.querySelector('input');i.value=Number(i.value||1)+1}));document.querySelectorAll('[data-minus]').forEach(b=>b.addEventListener('click',()=>{const i=b.parentElement.querySelector('input');i.value=Math.max(1,Number(i.value||1)-1)}));
 const sel=document.getElementById('method'),ttl=document.getElementById('arttitle'),lst=document.getElementById('artlist');const rules={'Sublimation':['Vector preferred: AI, EPS, SVG or PDF','PNG/JPG accepted at 300 DPI','Transparent background','Avoid small or thin text'],'Heat Transfer':['Vector preferred or high-resolution PNG','300 DPI and transparent background','Fonts outlined','$60 redraw fee may apply'],'Embroidery':['Vector preferred or clean high-resolution PNG','Minimum line thickness 1.5–2mm','Minimum text height 5–6mm','No gradients or photographic detail'],'Screen Printing':['Vector mandatory for multi-colour artwork','High-resolution PNG only for single colour','No JPG, screenshots or gradients','Use the design-brief journey']};function update(){if(!sel||!lst)return;ttl.textContent=sel.value+' artwork checklist';lst.innerHTML=rules[sel.value].map(x=>'<li>'+x+'</li>').join('')}sel?.addEventListener('change',update);update();
 
@@ -110,39 +113,6 @@ const sel=document.getElementById('method'),ttl=document.getElementById('arttitl
   document.querySelectorAll('.nav a[href="screen-printing.html"]').forEach((link)=>{
     link.textContent='Screen Printing / Custom Design';
   });
-
-  const productCta=document.querySelector('.pinfo .productcta');
-  if(productCta){
-    productCta.insertAdjacentHTML('beforebegin',[
-      '<button class="btn dark customiser-entry" type="button" data-customiser-entry>',
-      'Customise & preview your design <span>→</span>',
-      '</button>',
-      '<p class="integration-note">The confirmed customiser app opens at this step for sublimation, heat transfer and embroidery.</p>'
-    ].join(''));
-
-    const primaryAction=productCta.querySelector('.btn.primary');
-    const screenBriefLink=document.querySelector('.pinfo a[href="screen-printing.html"]');
-    const refreshProductJourney=()=>{
-      if(!sel || !primaryAction || !screenBriefLink)return;
-      const isScreenPrint=sel.value==='Screen Printing';
-      primaryAction.textContent=isScreenPrint?'Start your design brief':'Add to cart';
-      primaryAction.dataset.addCart=isScreenPrint?'false':'true';
-      screenBriefLink.hidden=isScreenPrint;
-      document.querySelector('.customiser-entry').hidden=isScreenPrint;
-      document.querySelector('.integration-note').hidden=isScreenPrint;
-    };
-    sel?.addEventListener('change',refreshProductJourney);
-    refreshProductJourney();
-
-    document.querySelector('[data-customiser-entry]')?.addEventListener('click',()=>{
-      const note=document.createElement('div');
-      note.className='customiser-toast';
-      note.textContent='Customiser hand-off point — connect the confirmed app here before launch.';
-      document.body.append(note);
-      requestAnimationFrame(()=>note.classList.add('show'));
-      setTimeout(()=>note.remove(),3600);
-    });
-  }
 
   /* Screen printing is a service page with a selectable garment pathway—not
      an instant-cart product. */
