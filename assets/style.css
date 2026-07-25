@@ -1258,3 +1258,26 @@ body{
     transition-duration:.001ms!important;
   }
 }
+
+/* Final PDP section spacing and four-card related grid. */
+.pdp-reviews-section{padding:0;background:#f8f6f2}
+.pdp-reviews-layout{padding:74px 0 76px}
+.pdp-related-section{padding:76px 0 88px;border-top:1px solid #eee9e1}
+.pdp-related-head{margin-bottom:34px}
+.pdp-related-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.pdp-related-card{border-radius:14px;box-shadow:none}
+.pdp-related-media{aspect-ratio:1/.93;border-radius:0;background:#f5f1eb}
+.pdp-related-card>div:last-child{padding:17px 17px 19px}
+.pdp-related-card h3{font-size:17px}
+.pdp-related-card p{min-height:38px}
+
+@media(max-width:980px){
+  .pdp-related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:540px){
+  .pdp-reviews-layout{padding:48px 0 52px}
+  .pdp-related-section{padding:54px 0 60px}
+  .pdp-related-grid{grid-template-columns:1fr;gap:16px}
+  .pdp-related-media{aspect-ratio:1/.72}
+}
