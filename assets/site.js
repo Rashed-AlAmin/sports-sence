@@ -174,6 +174,15 @@ const sel=document.getElementById('method'),ttl=document.getElementById('arttitl
   });
 })();
 
+/* Animated homepage CTAs, adapted from the supplied Uiverse button treatment. */
+const heroActions=document.querySelector('.hero-copy-block .actions');
+if(heroActions){
+  const makeHeroLetters=(text,className)=>[...text].map((letter,index)=>`<span style="--i:${index + 1}">${letter===' ' ? '&nbsp;' : letter}</span>`).join('');
+  const makeHeroCta=(href,label,hoverLabel,variant)=>`<a class="uiverse-hero-cta uiverse-hero-cta--${variant}" href="${href}" aria-label="${label}"><span class="uv-wave"></span><span class="uv-glow"></span><span class="uv-glow-out"></span><span class="uv-shadow uv-shadow--hard"></span><span class="uv-shadow uv-shadow--soft"></span><span class="uv-button"><span class="uv-main-text">${makeHeroLetters(label,'main')}</span><span class="uv-hover-text">${makeHeroLetters(hoverLabel,'hover')}</span></span></a>`;
+  heroActions.classList.add('uiverse-actions');
+  heroActions.innerHTML=makeHeroCta('pages/apparel.html','Start order','Shop now','order')+makeHeroCta('#process','How it works','Explore','process');
+}
+
 
 /* =========================================================
    GSAP MOTION + SMOOTH INTERACTIONS
