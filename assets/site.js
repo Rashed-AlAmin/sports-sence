@@ -88,6 +88,10 @@ drawer?.addEventListener('click',(event)=>{if(event.target.closest('[data-close-
 document.querySelectorAll('.cartitem>strong').forEach((price)=>price.textContent='Quote required');
 document.querySelectorAll('.drawerfoot .total span:last-child').forEach((total)=>total.textContent='After review');
 document.querySelectorAll('[data-add-cart]').forEach(b=>b.addEventListener('click',()=>{addCartProduct(b);const old=b.textContent;b.textContent='Added ✓';openCart();setTimeout(()=>b.textContent=old,1200)}));
+document.addEventListener('click',(event)=>{const button=event.target.closest('[data-featured-add-cart]');if(!button)return;event.preventDefault();addCartProduct(button);openCart();const old=button.textContent;button.textContent='Added ✓';setTimeout(()=>button.textContent=old,1200)});
+const openFeaturedProductPage=(card)=>{const url=card?.dataset.productPdp;if(url)window.location.href=url};
+document.addEventListener('click',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]'))return;openFeaturedProductPage(card)});
+document.addEventListener('keydown',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]')||!['Enter',' '].includes(event.key))return;event.preventDefault();openFeaturedProductPage(card)});
 document.querySelectorAll('.faqquestion').forEach(b=>b.addEventListener('click',()=>{const i=b.closest('.faqitem');i.classList.toggle('open');b.querySelector('span:last-child').textContent=i.classList.contains('open')?'−':'+'}));
 document.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{b.parentElement.querySelectorAll('.opt').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')}));
 document.querySelectorAll('[data-plus]').forEach(b=>b.addEventListener('click',()=>{const i=b.parentElement.querySelector('input');i.value=Number(i.value||1)+1}));document.querySelectorAll('[data-minus]').forEach(b=>b.addEventListener('click',()=>{const i=b.parentElement.querySelector('input');i.value=Math.max(1,Number(i.value||1)-1)}));
