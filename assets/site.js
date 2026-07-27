@@ -177,6 +177,15 @@ const openFeaturedProductPage=(card)=>{const url=card?.dataset.productPdp;if(url
 document.addEventListener('click',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]'))return;openFeaturedProductPage(card)});
 document.addEventListener('keydown',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]')||!['Enter',' '].includes(event.key))return;event.preventDefault();openFeaturedProductPage(card)});
 document.querySelectorAll('.faqquestion').forEach(b=>b.addEventListener('click',()=>{const i=b.closest('.faqitem');i.classList.toggle('open');b.querySelector('span:last-child').textContent=i.classList.contains('open')?'−':'+'}));
+document.querySelectorAll('.faqquestion').forEach((button)=>{
+  button.type='button';
+  button.title='Click to expand';
+  button.setAttribute('aria-expanded',String(button.closest('.faqitem')?.classList.contains('open')));
+  button.addEventListener('click',()=>{
+    button.setAttribute('aria-expanded',String(button.closest('.faqitem')?.classList.contains('open')));
+    button.title=button.closest('.faqitem')?.classList.contains('open')?'Click to close':'Click to expand';
+  });
+});
 const collectionGrid=document.querySelector('[data-collection-grid]');
 if(collectionGrid){
   const collectionCards=[...collectionGrid.querySelectorAll('.product')];
