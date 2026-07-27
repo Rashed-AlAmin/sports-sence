@@ -172,7 +172,70 @@ drawer?.addEventListener('click',(event)=>{if(event.target.closest('[data-close-
 document.querySelectorAll('.cartitem>strong').forEach((price)=>price.textContent='Quote required');
 document.querySelectorAll('.drawerfoot .total span:last-child').forEach((total)=>total.textContent='After review');
 document.querySelectorAll('[data-add-cart]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.designBrief==='true')return;addCartProduct(b);const old=b.textContent;b.textContent='Added ✓';openCart();setTimeout(()=>b.textContent=old,1200)}));
-document.addEventListener('click',(event)=>{const button=event.target.closest('[data-featured-add-cart]');if(!button)return;event.preventDefault();addCartProduct(button);openCart();const old=button.textContent;button.textContent='Added ✓';setTimeout(()=>button.textContent=old,1200)});
+document.addEventListener('click',(event)=>{const button=event.target.closest('[data-featured-add-cart]');if(!button)return;if(button.closest('[data-has-variants="true"]'))return;event.preventDefault();addCartProduct(button);openCart();const old=button.textContent;button.textContent='Added ✓';setTimeout(()=>button.textContent=old,1200)});
+/* Variant products use a small option picker instead of adding a guessed size/colour. */
+const quickVariantProducts={
+  'Club Performance Tee':{colours:['Black','White','Navy'],sizes:['S','M','L','XL']},
+  'Team Hoodie':{colours:['Grey','Black','Navy'],sizes:['S','M','L','XL']},
+  'Performance Polo':{colours:['Black','White','Navy'],sizes:['S','M','L','XL']},
+  'Training Singlet':{colours:['Black','White','Navy'],sizes:['S','M','L','XL']},
+  'Coaches Jacket':{colours:['Black','Navy'],sizes:['S','M','L','XL']}
+};
+const quickVariantDialog=document.createElement('section');
+quickVariantDialog.className='quick-variant-dialog';
+quickVariantDialog.setAttribute('aria-hidden','true');
+quickVariantDialog.innerHTML='<div class="quick-variant-backdrop" data-quick-variant-close></div><div class="quick-variant-panel" role="dialog" aria-modal="true" aria-label="Select product options"><button class="quick-variant-close" type="button" aria-label="Close" data-quick-variant-close>×</button><span class="eyebrow">Quick add</span><h2 data-quick-variant-title></h2><div class="quick-variant-group"><span>Colour</span><div data-quick-variant-colours></div></div><div class="quick-variant-group"><span>Size</span><div data-quick-variant-sizes></div></div><div class="quick-variant-actions"><label>Qty <input type="number" min="1" value="1" data-quick-variant-quantity></label><button class="btn primary" type="button" data-quick-variant-confirm>Add to cart</button></div></div>';
+document.body.append(quickVariantDialog);
+let quickVariantTrigger=null;
+const closeQuickVariantDialog=()=>{
+  quickVariantDialog.classList.remove('open');
+  quickVariantDialog.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+};
+const optionButtons=(values,group)=>values.map((value,index)=>`<button type="button" class="quick-variant-option${index===0?' is-selected':''}" data-quick-variant-option data-value="${value}">${value}</button>`).join('');
+const openQuickVariantDialog=(trigger)=>{
+  const card=trigger.closest('.product');
+  const title=card?.querySelector('h3')?.textContent.trim()||'Product';
+  const options=quickVariantProducts[title];
+  if(!options)return;
+  quickVariantTrigger=trigger;
+  quickVariantDialog.querySelector('[data-quick-variant-title]').textContent=title;
+  quickVariantDialog.querySelector('[data-quick-variant-colours]').innerHTML=optionButtons(options.colours,'colour');
+  quickVariantDialog.querySelector('[data-quick-variant-sizes]').innerHTML=optionButtons(options.sizes,'size');
+  quickVariantDialog.querySelector('[data-quick-variant-quantity]').value='1';
+  quickVariantDialog.classList.add('open');
+  quickVariantDialog.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+};
+document.querySelectorAll('[data-featured-add-cart]').forEach((button)=>{
+  const title=button.closest('.product')?.querySelector('h3')?.textContent.trim();
+  if(!quickVariantProducts[title])return;
+  button.closest('.product')?.setAttribute('data-has-variants','true');
+  button.textContent='Select options';
+  button.setAttribute('aria-label',`Select options for ${title}`);
+});
+document.addEventListener('click',(event)=>{
+  const variantButton=event.target.closest('[data-featured-add-cart]');
+  if(variantButton?.closest('[data-has-variants="true"]')){event.preventDefault();openQuickVariantDialog(variantButton);return}
+  if(event.target.closest('[data-quick-variant-close]')){closeQuickVariantDialog();return}
+  const option=event.target.closest('[data-quick-variant-option]');
+  if(option){option.parentElement.querySelectorAll('[data-quick-variant-option]').forEach((item)=>item.classList.toggle('is-selected',item===option));return}
+  if(event.target.closest('[data-quick-variant-confirm]')&&quickVariantTrigger){
+    const selected=[...quickVariantDialog.querySelectorAll('.quick-variant-group')].map((group)=>group.querySelector('.quick-variant-option.is-selected')?.dataset.value).filter(Boolean);
+    const quantity=Math.max(1,Number(quickVariantDialog.querySelector('[data-quick-variant-quantity]')?.value||1));
+    addCartProduct(quickVariantTrigger);
+    const newLine=[...drawer?.querySelectorAll('[data-cart-line]')||[]].at(-1);
+    if(newLine){
+      const details=newLine.querySelector('.selection-copy>p'),input=newLine.querySelector('.qty input');
+      if(details)details.textContent=selected.join(' / ')||'Selected options';
+      if(input)input.value=quantity;
+      updateCartCount();
+    }
+    closeQuickVariantDialog();
+    openCart();
+  }
+});
+document.addEventListener('keydown',(event)=>{if(event.key==='Escape'&&quickVariantDialog.classList.contains('open'))closeQuickVariantDialog()});
 const openFeaturedProductPage=(card)=>{const url=card?.dataset.productPdp;if(url)window.location.href=url};
 document.addEventListener('click',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]'))return;openFeaturedProductPage(card)});
 document.addEventListener('keydown',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]')||!['Enter',' '].includes(event.key))return;event.preventDefault();openFeaturedProductPage(card)});
