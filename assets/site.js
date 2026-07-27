@@ -35,6 +35,50 @@ document.querySelectorAll('.nav').forEach((navigation,navIndex)=>{
   requestAnimationFrame(()=>setTab(activeIndex));
   window.addEventListener('resize',()=>{const current=tabs.findIndex((tab)=>tab.link.classList.contains('is-current'));setTab(current<0?activeIndex:current)},{passive:true});
 });
+
+/* Product-category shortcuts live below the two catalogue tabs on desktop. */
+const categorySubnavigation={
+  'apparel.html':[['Tees','apparel.html?type=tees'],['Polos','apparel.html?type=polos'],['Hoodies','apparel.html?type=hoodies'],['Shorts','apparel.html?type=shorts'],['Teamwear','apparel.html?type=teamwear']],
+  'promotional-products.html':[['Drinkware','promotional-products.html?type=drinkware'],['Bags','promotional-products.html?type=bags'],['Mugs','promotional-products.html?type=mugs'],['Headwear','promotional-products.html?type=headwear'],['Pens & office','promotional-products.html?type=office']]
+};
+const subnavBasePath=location.pathname.includes('/pages/')?'':'pages/';
+document.querySelectorAll('.nav.ss-tab-nav').forEach((navigation)=>{
+  const header=navigation.closest('.header');
+  const tabMenu=navigation.querySelector('.ss-tab-menu');
+  if(!header||!tabMenu)return;
+  const menus=[];
+  navigation.querySelectorAll('.ss-tab-label').forEach((link)=>{
+    const key=(link.getAttribute('href')||'').split('?')[0].split('/').pop();
+    const entries=categorySubnavigation[key];
+    if(!entries)return;
+    const panel=document.createElement('div');
+    panel.className='ss-category-subnav';
+    panel.setAttribute('aria-label',`${link.textContent.trim()} categories`);
+    panel.innerHTML=entries.map(([label,href])=>`<a href="${subnavBasePath}${href}">${label}</a>`).join('');
+    tabMenu.append(panel);menus.push(panel);
+    let closeTimer;
+    const open=()=>{
+      clearTimeout(closeTimer);
+      const menuRect=tabMenu.getBoundingClientRect(),linkRect=link.getBoundingClientRect();
+      panel.style.setProperty('--submenu-x',`${linkRect.left-menuRect.left}px`);
+      menus.forEach((menu)=>menu.classList.toggle('is-open',menu===panel));
+      tabMenu.classList.add('has-submenu');
+    };
+    const close=()=>{closeTimer=setTimeout(()=>{
+      panel.classList.remove('is-open');
+      if(!menus.some((menu)=>menu.classList.contains('is-open')))tabMenu.classList.remove('has-submenu');
+    },120)};
+    link.addEventListener('pointerenter',open);
+    link.addEventListener('focus',open);
+    link.addEventListener('pointerleave',close);
+    panel.addEventListener('pointerenter',()=>clearTimeout(closeTimer));
+    panel.addEventListener('pointerleave',close);
+  });
+  header.addEventListener('pointerleave',()=>{
+    menus.forEach((menu)=>menu.classList.remove('is-open'));
+    tabMenu.classList.remove('has-submenu');
+  });
+});
 document.querySelectorAll('.trustbar-in').forEach((bar)=>{
   const items=[...bar.querySelectorAll('.trustitem')];
   if(items.length<2)return;
@@ -81,6 +125,8 @@ const pagePath=location.pathname.includes('/pages/')?'':'pages/';
 const footerIcons={facebook:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.5c-.5-.1-1.5-.2-2.8-.2-2.8 0-4.7 1.7-4.7 4.9V12H6.4v3.9h3.1V22h4.1v-6.1h3.2l.5-3.9H13.6V9.6c0-1.1.3-1.6 1.4-1.6Z"/></svg>',instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.7"/><circle cx="17.7" cy="6.5" r=".8"/></svg>',linkedin:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 9.2V18M6.2 6.1v.1M10.2 18v-5c0-2.5 3.8-2.7 3.8 0v5M13.9 13c0-4.2 5.2-4.6 5.2 0v5"/></svg>',arrow:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>'};
 document.querySelectorAll('.footer').forEach((footer)=>{
   footer.innerHTML=`<div class="footer-shell"><div class="footer-main"><section class="footer-intro"><a class="brand" href="${pagePath}index.html"><span class="brandmark"></span><span class="brandtext"><span>Sport</span><span>Sense</span></span></a><p>Custom teamwear, promotional products, screen printing and awards made simple for clubs, schools and businesses.</p><span class="footer-location">Brendale, Queensland · Australia-wide</span></section><section class="footer-contact"><h3>Office</h3><p>18 Kremzow Road<br>Brendale QLD 4500<br>Australia</p><a href="mailto:hello@sportsense.com.au">hello@sportsense.com.au</a><a href="tel:+61732050000">+61 7 3205 0000</a></section><nav class="footer-links" aria-label="Footer links"><h3>Explore</h3><a href="${pagePath}apparel.html">Apparel</a><a href="${pagePath}promotional-products.html">Promotional Products</a><a href="${pagePath}screen-printing.html">Screen Printing</a><a href="${pagePath}trophies.html">Trophies & Awards</a><a href="${pagePath}contact.html">Contact</a></nav><section class="footer-newsletter"><h3>Stay in the loop</h3><p>New teamwear ideas, product drops and practical ordering tips.</p><form class="footer-signup"><label class="sr-only" for="footer-email">Email address</label><input id="footer-email" type="email" placeholder="Enter your email" required><button type="submit" aria-label="Subscribe">${footerIcons.arrow}</button></form><div class="footer-socials"><a href="#" aria-label="Facebook">${footerIcons.facebook}</a><a href="#" aria-label="Instagram">${footerIcons.instagram}</a><a href="#" aria-label="LinkedIn">${footerIcons.linkedin}</a></div></section></div><div class="footer-bottom"><span>© 2026 SportSense. All rights reserved.</span><span>Built for clubs, schools & teams.</span></div></div>`;
+  const importantLinks=footer.querySelector('.footer-links');
+  if(importantLinks)importantLinks.innerHTML=`<h3>Important Stuff</h3><a href="${pagePath}decoration-methods.html">Decoration Methods Explained</a><a href="${pagePath}ordering-lead-times.html">Ordering & Lead Times</a><a href="${pagePath}faq.html">FAQs</a><a href="${pagePath}screen-printing.html">Screen Printing / Custom Design</a><a href="${pagePath}contact.html">Contact</a>`;
   footer.querySelector('.footer-signup')?.addEventListener('submit',(event)=>{event.preventDefault();event.currentTarget.classList.add('is-subscribed');event.currentTarget.querySelector('input').value='Thanks — you’re on the list!'});
 });
 const sportSenseLogo='https://sportsense.com.au/cdn/shop/files/SportSense_Logo.png?v=1701154538&width=200';
@@ -125,7 +171,7 @@ document.addEventListener('keydown',(event)=>{if(event.key==='Escape'&&drawer?.c
 drawer?.addEventListener('click',(event)=>{if(event.target.closest('[data-close-cart]')){closeCart();return}const remove=event.target.closest('[data-remove-cart]');if(remove){event.stopPropagation();remove.closest('[data-cart-line]')?.remove();if(!updateCartCount())showEmptyCart();return}const quantityButton=event.target.closest('[data-plus],[data-minus]');if(!quantityButton)return;const input=quantityButton.closest('.qty')?.querySelector('input');if(!input)return;input.value=quantityButton.hasAttribute('data-plus')?Number(input.value||1)+1:Math.max(1,Number(input.value||1)-1);updateCartCount()});
 document.querySelectorAll('.cartitem>strong').forEach((price)=>price.textContent='Quote required');
 document.querySelectorAll('.drawerfoot .total span:last-child').forEach((total)=>total.textContent='After review');
-document.querySelectorAll('[data-add-cart]').forEach(b=>b.addEventListener('click',()=>{addCartProduct(b);const old=b.textContent;b.textContent='Added ✓';openCart();setTimeout(()=>b.textContent=old,1200)}));
+document.querySelectorAll('[data-add-cart]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.designBrief==='true')return;addCartProduct(b);const old=b.textContent;b.textContent='Added ✓';openCart();setTimeout(()=>b.textContent=old,1200)}));
 document.addEventListener('click',(event)=>{const button=event.target.closest('[data-featured-add-cart]');if(!button)return;event.preventDefault();addCartProduct(button);openCart();const old=button.textContent;button.textContent='Added ✓';setTimeout(()=>button.textContent=old,1200)});
 const openFeaturedProductPage=(card)=>{const url=card?.dataset.productPdp;if(url)window.location.href=url};
 document.addEventListener('click',(event)=>{const card=event.target.closest('[data-product-pdp]');if(!card||event.target.closest('[data-featured-add-cart]'))return;openFeaturedProductPage(card)});
@@ -163,6 +209,27 @@ document.querySelectorAll('[data-colour]').forEach((swatch)=>swatch.addEventList
 document.querySelectorAll('.product-size').forEach((size)=>size.addEventListener('click',()=>{const selected=document.querySelector('[data-selected-size]');if(selected)selected.textContent=size.textContent.trim()}));
 document.querySelectorAll('[data-plus]').forEach(b=>b.addEventListener('click',()=>{const i=b.parentElement.querySelector('input');i.value=Number(i.value||1)+1}));document.querySelectorAll('[data-minus]').forEach(b=>b.addEventListener('click',()=>{const i=b.parentElement.querySelector('input');i.value=Math.max(1,Number(i.value||1)-1)}));
 const sel=document.getElementById('method'),ttl=document.getElementById('arttitle'),lst=document.getElementById('artlist');const rules={'Sublimation':['Vector preferred: AI, EPS, SVG or PDF','PNG/JPG accepted at 300 DPI','Transparent background','Avoid small or thin text'],'Heat Transfer':['Vector preferred or high-resolution PNG','300 DPI and transparent background','Fonts outlined','$60 redraw fee may apply'],'Embroidery':['Vector preferred or clean high-resolution PNG','Minimum line thickness 1.5–2mm','Minimum text height 5–6mm','No gradients or photographic detail'],'Screen Printing':['Vector mandatory for multi-colour artwork','High-resolution PNG only for single colour','No JPG, screenshots or gradients','Use the design-brief journey']};function update(){if(!sel||!lst)return;ttl.textContent=sel.value+' artwork checklist';lst.innerHTML=rules[sel.value].map(x=>'<li>'+x+'</li>').join('')}sel?.addEventListener('change',update);update();
+
+/* Keep the product-page CTA aligned with the selected decoration journey. */
+const productMethod=document.getElementById('method');
+const productPrimaryCta=document.querySelector('.pdp-add-button');
+const productSecondaryCta=document.querySelector('.pdp-buy-button');
+const syncProductJourney=()=>{
+  if(!productMethod||!productPrimaryCta)return;
+  const isScreenPrinting=productMethod.value==='Screen Printing';
+  productPrimaryCta.dataset.designBrief=String(isScreenPrinting);
+  productPrimaryCta.textContent=isScreenPrinting?'Start your design brief':'Add to cart';
+  productPrimaryCta.setAttribute('aria-label',isScreenPrinting?'Start your screen-printing design brief':'Add product to cart');
+  if(productSecondaryCta)productSecondaryCta.hidden=isScreenPrinting;
+};
+productMethod?.addEventListener('change',syncProductJourney);
+productPrimaryCta?.addEventListener('click',(event)=>{
+  if(productMethod?.value!=='Screen Printing')return;
+  event.preventDefault();
+  window.location.href='screen-printing.html#design-brief';
+});
+syncProductJourney();
+if(document.title.includes('Screen Printing'))document.querySelector('.contactform')?.setAttribute('id','design-brief');
 
 /* =========================================================
    BRIEF-CRITICAL PROTOTYPE STATES
