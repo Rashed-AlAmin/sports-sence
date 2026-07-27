@@ -631,7 +631,9 @@ body{
 }
 
 .work-card{
-  align-self:start;
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
   margin-top:0 !important;
   transform:translateY(0) !important;
   opacity:1 !important;
@@ -676,6 +678,9 @@ body{
 
 .work-content{
   padding:24px;
+  display:flex;
+  flex:1;
+  flex-direction:column;
 }
 
 .work-content h3{
@@ -692,6 +697,7 @@ body{
 .work-content a{
   display:inline-flex;
   gap:8px;
+  margin-top:auto;
   font-size:14px;
   font-weight:900;
 }
@@ -1163,7 +1169,7 @@ body{
   }
 
   .featured-work-grid .work-card:last-child{
-    grid-column:1/-1;
+    grid-column:auto;
   }
 }
 
@@ -1371,4 +1377,79 @@ body{background:#fff}
 }
 @media(max-width:620px){
   .uiverse-hero-cta .uv-glow{width:222px!important;height:60px!important}
+}
+
+/* Shared typography scale for every content section; the hero/banner keeps its own display scale. */
+:root{
+  --section-display-size:64px;
+  --section-card-title-size:22px;
+  --section-body-size:16px;
+  --section-button-size:14px;
+}
+
+main > .section h1,
+main > .section h2{
+  font-size:var(--section-display-size)!important;
+  line-height:.98!important;
+  letter-spacing:-.05em;
+}
+
+main > .section h3{
+  font-size:var(--section-card-title-size)!important;
+  line-height:1.18!important;
+}
+
+main > .section p{
+  font-size:var(--section-body-size)!important;
+  line-height:1.55;
+}
+
+main > .section .btn{
+  font-size:var(--section-button-size)!important;
+}
+
+@media(max-width:680px){
+  :root{
+    --section-display-size:42px;
+    --section-card-title-size:20px;
+    --section-body-size:15px;
+  }
+}
+
+/* One shared CTA treatment outside the animated homepage banner. */
+main > :not(.homehero) .btn{
+  min-height:46px!important;
+  padding:0 20px!important;
+  border:1px solid transparent!important;
+  border-radius:999px!important;
+  font-size:14px!important;
+  font-weight:900;
+  line-height:1;
+  box-shadow:none;
+}
+
+main > :not(.homehero) .btn.primary{
+  color:var(--ink);
+  background:var(--orange);
+  border-color:var(--orange)!important;
+}
+
+main > :not(.homehero) .btn.secondary{
+  color:var(--ink);
+  background:#fff;
+  border-color:#d9d2c9!important;
+}
+
+main > :not(.homehero) .btn.primary:hover{
+  color:var(--ink);
+  background:var(--orange2);
+  border-color:var(--orange2)!important;
+  box-shadow:0 12px 24px rgba(245,166,35,.2);
+}
+
+main > :not(.homehero) .btn.secondary:hover{
+  color:var(--ink);
+  background:#fff;
+  border-color:var(--ink)!important;
+  box-shadow:none;
 }
