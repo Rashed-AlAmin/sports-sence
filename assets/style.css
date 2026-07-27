@@ -1336,3 +1336,29 @@ body{background:#fff}
 
 /* Homepage CTA: supplied Uiverse-style floating button treatment. */
 .uiverse-actions{gap:2px!important;align-items:center;margin-bottom:30px!important}.uiverse-hero-cta{position:relative;isolation:isolate;display:grid;width:248px;height:84px;place-items:center;text-decoration:none;cursor:pointer;outline:0}.uv-button{position:relative;z-index:4;display:grid;width:232px;height:62px;place-items:center;overflow:hidden;border-radius:999px;color:rgba(0,0,0,.72);background:linear-gradient(170deg,#cce75c 10%,#ecf577 50%,#fafe50 90%);box-shadow:inset 0 5.5px 1px -2px #95be4490,inset 0 -5px 1px -3px rgba(255,255,255,.7),inset 4px 16px 1.5px -7px #0000000a;transform:translateY(-5px);animation:uv-float 2s ease infinite;transition:box-shadow .55s ease,background .55s ease}.uv-button:before,.uv-button:after{content:"";position:absolute;z-index:-1;width:242px;height:68px;border-radius:999px;background:linear-gradient(170deg,#cce75c 10%,#ecf577 50%,#fafe50 90%);transform:translateZ(-1px) translateY(2px);transition:.45s ease}.uv-button:before{background:linear-gradient(95deg,#ecf577 -30%,#cfd135 100%);transform:translateZ(-2px) translateY(6px)}.uv-glow,.uv-glow-out{position:absolute;z-index:2;width:244px;height:74px;border-radius:999px;background:linear-gradient(170deg,#cce75c 10%,#ecf577 50%,#fafe50 90%)}.uv-glow{transition:all .7s ease}.uv-glow-out{opacity:0;filter:blur(10px);transform:scale(1.42)}.uv-shadow{position:absolute;z-index:-1;border-radius:999px}.uv-shadow--hard{width:220px;height:47px;background:#d2d2d2;box-shadow:3px 3px 8px rgba(255,255,255,.7),-3px -4px 5px -2px rgba(0,0,0,.24);animation:uv-shadow-drift 2s ease infinite}.uv-shadow--soft{width:195px;height:38px;transform:translateY(33px);filter:blur(11px);background:rgba(0,0,0,.18);animation:uv-shadow-pulse 2s ease infinite}.uv-wave{position:absolute;z-index:1;width:100px;height:62px;border-radius:999px;opacity:0;transition:all .6s ease}.uv-wave:before,.uv-wave:after{content:"";position:absolute;inset:0;border:3px solid #fff;border-left:0;border-right:0;border-radius:inherit;filter:blur(3px);animation:uv-wave 2s linear infinite}.uv-wave:after{animation-delay:1s}.uv-corners{position:absolute;z-index:3;display:grid;width:268px;height:90px;grid-template-columns:18px 1fr 18px;grid-template-rows:18px 1fr 18px;animation:uv-corner-breathe 2s linear infinite;pointer-events:none}.uv-corners i{width:18px;height:18px;background:#d2d2d2;clip-path:path('M0 6C0 2 2 0 6 0H18V18H6C2 18 0 16 0 12Z');filter:drop-shadow(-1px -1px .6px rgba(0,0,0,.25)) drop-shadow(1px 1px 1px rgba(255,255,255,.67))}.uv-corners i:nth-child(1){grid-area:1/1}.uv-corners i:nth-child(2){grid-area:3/1;transform:rotate(-90deg)}.uv-corners i:nth-child(3){grid-area:3/3;transform:rotate(180deg)}.uv-corners i:nth-child(4){grid-area:1/3;transform:rotate(90deg)}.uv-main-text,.uv-hover-text{position:absolute;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}.uv-main-text span,.uv-hover-text span{display:block;animation:uv-emerge 1.25s ease both;animation-delay:calc(var(--i)*.055s);text-shadow:0 1px 1px rgba(255,255,255,.7)}.uv-hover-text{opacity:0}.uv-hover-text span{animation:none}.uiverse-hero-cta:hover .uv-glow{z-index:5;opacity:0;filter:blur(10px);transform:scale(1.42)}.uiverse-hero-cta:hover .uv-button{background:none;box-shadow:inset 0 5.5px 1px -2px transparent,inset 0 -5px 1px -3px transparent,0 -5px 10px -3px rgba(255,255,255,.7),4px 16px 8px -13px rgba(0,0,0,.26)}.uiverse-hero-cta:hover .uv-button:before,.uiverse-hero-cta:hover .uv-button:after{filter:grayscale(1)}.uiverse-hero-cta:hover .uv-main-text span{animation:uv-hide .55s ease both;animation-delay:calc(var(--i)*.03s)}.uiverse-hero-cta:hover .uv-hover-text{opacity:1}.uiverse-hero-cta:hover .uv-hover-text span{animation:uv-emerge 1.2s ease both;animation-delay:calc(var(--i)*.055s)}.uiverse-hero-cta:focus-visible{outline:3px solid var(--orange2);outline-offset:4px;border-radius:999px}.uiverse-hero-cta:focus-visible .uv-wave{width:190px;opacity:1}.uiverse-hero-cta:active .uv-button{transform:translateY(0)}@keyframes uv-float{50%{transform:translateY(0)}}@keyframes uv-shadow-drift{50%{transform:translate(2px,3px)}}@keyframes uv-shadow-pulse{50%{transform:translateY(33px) scale(.95)}}@keyframes uv-wave{0%{opacity:0;transform:scale(1)}40%{opacity:1;transform:scale(1.6)}100%{opacity:0;transform:scale(2);box-shadow:0 0 50px #fbff00}}@keyframes uv-corner-breathe{50%{transform:scale(.96)}}@keyframes uv-emerge{0%{opacity:0;filter:blur(18px);transform:scale(4) translateX(-28px)}100%{opacity:1;filter:blur(0);transform:scale(1) translateX(0)}}@keyframes uv-hide{to{opacity:0;filter:blur(5px);transform:translate(9px,-18px)}}@media(max-width:620px){.uiverse-actions{gap:0!important}.uiverse-hero-cta{width:236px;height:76px}.uv-button{width:222px;height:60px}}@media(prefers-reduced-motion:reduce){.uv-button,.uv-shadow,.uv-corners,.uv-main-text span,.uv-wave:before,.uv-wave:after{animation:none!important}}
+
+/* Keep the CTA's layered depth without letting its glow read as a blurred border. */
+.uiverse-hero-cta .uv-glow{
+  width:204px!important;
+  height:48px!important;
+  border-radius:999px;
+}
+.uiverse-hero-cta .uv-shadow--hard{
+  width:190px!important;
+  height:30px!important;
+  background:rgba(116,72,8,.22)!important;
+  box-shadow:0 8px 17px rgba(26,26,26,.15)!important;
+  filter:blur(1px);
+  transform:translateY(22px)!important;
+}
+.uiverse-hero-cta .uv-shadow--soft{
+  opacity:.48;
+  transform:translateY(25px)!important;
+}
+.uiverse-hero-cta .uv-shadow--hard,
+.uiverse-hero-cta .uv-shadow--soft{
+  animation:none;
+}
+@media(max-width:620px){
+  .uiverse-hero-cta .uv-glow{width:222px!important;height:60px!important}
+}
