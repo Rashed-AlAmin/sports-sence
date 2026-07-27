@@ -39,6 +39,18 @@ document.querySelectorAll('.trustbar-in').forEach((bar)=>{
   const items=[...bar.querySelectorAll('.trustitem')];
   if(items.length<2)return;
   bar.classList.add('trust-carousel');
+  const arrowIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg>';
+  const previousButton=document.createElement('button');
+  previousButton.className='trust-carousel-control trust-carousel-control--previous';
+  previousButton.type='button';
+  previousButton.setAttribute('aria-label','Show previous announcement');
+  previousButton.innerHTML=arrowIcon;
+  const nextButton=document.createElement('button');
+  nextButton.className='trust-carousel-control trust-carousel-control--next';
+  nextButton.type='button';
+  nextButton.setAttribute('aria-label','Show next announcement');
+  nextButton.innerHTML=arrowIcon;
+  bar.append(previousButton,nextButton);
   let active=0,timer;
   const show=(index)=>{
     const next=(index+items.length)%items.length;
@@ -56,6 +68,8 @@ document.querySelectorAll('.trustbar-in').forEach((bar)=>{
     timer=setInterval(()=>show(active+1),3200);
   };
   items[0].classList.add('is-active');start();
+  previousButton.addEventListener('click',()=>{show(active-1);start()});
+  nextButton.addEventListener('click',()=>{show(active+1);start()});
   bar.addEventListener('pointerenter',()=>clearInterval(timer));
   bar.addEventListener('pointerleave',start);
 });

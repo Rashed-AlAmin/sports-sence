@@ -1702,6 +1702,35 @@ main > :not(.homehero) .btn.secondary:hover{
   transform:translateX(-28px);
 }
 
+.trust-carousel-control{
+  position:absolute;
+  top:50%;
+  z-index:2;
+  width:27px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:50%;
+  color:var(--ink);
+  background:transparent;
+  cursor:pointer;
+  transform:translateY(-50%);
+  transition:color .2s ease,background .2s ease,transform .2s ease;
+}
+
+.trust-carousel-control--previous{left:calc(50% - 250px)}
+.trust-carousel-control--next{right:calc(50% - 250px);transform:translateY(-50%) rotate(180deg)}
+.trust-carousel-control:hover{color:var(--orange2);background:rgba(245,166,35,.13)}
+.trust-carousel-control--next:hover{transform:translateY(-50%) rotate(180deg) scale(1.08)}
+.trust-carousel-control--previous:hover{transform:translateY(-50%) scale(1.08)}
+.trust-carousel-control svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+@media(max-width:680px){
+  .trust-carousel-control--previous{left:6px}
+  .trust-carousel-control--next{right:6px}
+}
+
 /* Dark local-support section with a light photo and location card for contrast. */
 .trust-story-section{
   color:#fff!important;
