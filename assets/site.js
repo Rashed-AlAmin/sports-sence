@@ -418,35 +418,4 @@ if(heroActions){
     });
   });
 
-  /* Cart drawer motion enhancement */
-  const drawerEl = document.querySelector('.drawer');
-  const backdropEl = document.querySelector('.backdrop');
-
-  document.querySelectorAll('[data-open-cart]').forEach((button)=>{
-    button.addEventListener('click',()=>{
-      if(!drawerEl) return;
-      gsap.fromTo(drawerEl,{x:80},{x:0,duration:.48,ease:'power4.out'});
-      gsap.from('.cartitem',{
-        x:35,
-        opacity:0,
-        stagger:.08,
-        delay:.13,
-        duration:.5
-      });
-      gsap.from('.drawerfoot',{
-        y:25,
-        opacity:0,
-        delay:.24,
-        duration:.5
-      });
-    });
-  });
-
-  document.querySelectorAll('[data-close-cart]').forEach((button)=>{
-    button.addEventListener('click',()=>{
-      if(backdropEl){
-        gsap.fromTo(backdropEl,{opacity:1},{opacity:0,duration:.22});
-      }
-    });
-  });
 })();
