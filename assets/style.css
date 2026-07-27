@@ -1859,3 +1859,7 @@ main > :not(.homehero) .btn.secondary:hover{
 
 .pdp-share a{width:30px;height:30px}.pdp-share a svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.pdp-share a:nth-of-type(1) svg,.pdp-share a:nth-of-type(2) svg,.pdp-share a:nth-of-type(4) svg{fill:currentColor;stroke:none}
 .pdp-wishlist{display:grid;place-items:center}.pdp-wishlist svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.pdp-wishlist[aria-pressed="true"] svg{fill:currentColor}
+
+.collection-filter-head h3{font-size:30px!important;line-height:1.05!important;letter-spacing:-.045em!important}
+
+.collection--refined .product{display:flex;flex-direction:column}.collection--refined .pbody{display:flex;flex:1;flex-direction:column;gap:15px}.collection--refined .pbody>*{margin:0!important}.collection--refined .supplier{margin-bottom:0}.collection--refined .pactions{margin-top:auto!important}
