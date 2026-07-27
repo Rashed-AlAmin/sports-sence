@@ -155,11 +155,11 @@ document.querySelectorAll('.hactions').forEach((actions)=>{
   actions.innerHTML=`<button class="header-action" type="button" aria-label="Search" data-search-toggle>${icon.search}</button><a class="header-action" href="${pagePath}portal.html" aria-label="Your account">${icon.account}</a><button class="header-action" type="button" aria-label="Wishlist" aria-pressed="false" data-wishlist-toggle>${icon.heart}<span class="action-tooltip">Wishlist</span></button><button class="header-action cart-action" type="button" aria-label="Open cart" data-open-cart>${icon.bag}<span class="cartcount">0</span><span class="action-tooltip">Cart</span></button>`;
 });
 if(drawer){
-  drawer.innerHTML=`<div class="drawerhead selection-head"><div><span class="cart-kicker">Cart</span><h2>Your selection</h2></div><button class="closecart" type="button" aria-label="Close cart" data-close-cart>${icon.close}</button></div><div class="drawerbody selection-body"><div class="shipping-status"><strong>You unlocked free shipping</strong><div><span></span></div></div><article class="selection-item" data-cart-line><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=300&q=80" alt="Club Performance Tee"><div class="selection-copy"><h3>Club Performance Tee</h3><p>Black / Large / Embroidery</p><button class="line-remove" type="button" aria-label="Remove Club Performance Tee" data-remove-cart>${icon.trash}</button><div class="selection-bottom"><div class="qty"><button data-minus aria-label="Decrease quantity">−</button><input value="12" aria-label="Quantity"><button data-plus aria-label="Increase quantity">+</button></div><strong>Quote <small>after review</small></strong></div></div></article><article class="selection-item" data-cart-line><img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=300&q=80" alt="Branded Bottle"><div class="selection-copy"><h3>Branded Bottle</h3><p>Orange / Logo print</p><button class="line-remove" type="button" aria-label="Remove Branded Bottle" data-remove-cart>${icon.trash}</button><div class="selection-bottom"><div class="qty"><button data-minus aria-label="Decrease quantity">−</button><input value="25" aria-label="Quantity"><button data-plus aria-label="Increase quantity">+</button></div><strong>Quote <small>after review</small></strong></div></div></article></div><div class="drawerfoot selection-foot"><div class="selection-total"><span>Estimated subtotal</span><strong>Quote on request</strong></div><p>Final pricing is confirmed after artwork, quantity and supplier availability are reviewed.</p><button class="btn primary" style="width:100%">Proceed to checkout</button></div>`;
+  drawer.innerHTML=`<div class="drawerhead selection-head"><div><span class="cart-kicker">Cart</span><h2>Your selection</h2></div><button class="closecart" type="button" aria-label="Close cart" data-close-cart>${icon.close}</button></div><div class="drawerbody selection-body"><div class="shipping-status"><strong>Minimum order guidance</strong><div><span></span></div></div><article class="selection-item" data-cart-line><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=300&q=80" alt="Club Performance Tee"><div class="selection-copy"><h3>Club Performance Tee</h3><p>Black / Large / Embroidery</p><button class="line-remove" type="button" aria-label="Remove Club Performance Tee" data-remove-cart>${icon.trash}</button><div class="selection-bottom"><div class="qty"><button data-minus aria-label="Decrease quantity">−</button><input value="12" aria-label="Quantity"><button data-plus aria-label="Increase quantity">+</button></div><strong>Quote <small>after review</small></strong></div></div></article><article class="selection-item" data-cart-line><img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=300&q=80" alt="Branded Bottle"><div class="selection-copy"><h3>Branded Bottle</h3><p>Orange / Logo print</p><button class="line-remove" type="button" aria-label="Remove Branded Bottle" data-remove-cart>${icon.trash}</button><div class="selection-bottom"><div class="qty"><button data-minus aria-label="Decrease quantity">−</button><input value="25" aria-label="Quantity"><button data-plus aria-label="Increase quantity">+</button></div><strong>Quote <small>after review</small></strong></div></div></article></div><div class="drawerfoot selection-foot"><div class="selection-total"><span>Estimated subtotal</span><strong>Quote on request</strong></div><p>Final pricing is confirmed after artwork, quantity and supplier availability are reviewed.</p><button class="btn primary" style="width:100%">Proceed to checkout</button></div>`;
 }
-const shippingStatus=drawer?.querySelector('.shipping-status');if(shippingStatus)shippingStatus.innerHTML='<div class="shipping-status-head"><strong>Free shipping progress</strong><span>Almost there</span></div><div class="shipping-progress"><span></span></div><p>Add one more eligible item to unlock free shipping.</p>';
+const shippingStatus=drawer?.querySelector('.shipping-status');if(shippingStatus)shippingStatus.innerHTML='<div class="shipping-status-head"><strong>Minimum order progress</strong><span>Almost there</span></div><div class="shipping-progress"><span></span></div><p>Add one more eligible item to unlock free shipping.</p>';
 const demoPrices={'Club Performance Tee':24.95,'Team Hoodie':54.95,'Club Polo':39.95,'Training Shorts':29.95,'Branded Bottle':18.95,'Promotional Tote':12.95,'Corporate Mug':16.95,'Victory Cup':49.95,'Crystal Peak Award':79.95,'Classic Medal':7.95,'Prestige Award':69.95,'Silver Champion Cup':44.95};document.querySelectorAll('.product').forEach((card)=>{const name=card.querySelector('h3')?.textContent.trim(),price=demoPrices[name]??29.95;card.dataset.demoPrice=price;const priceLabel=card.querySelector('.ptop strong');if(priceLabel)priceLabel.textContent=`From $${price.toFixed(2)}`});
-const updateCartCount=()=>{const lines=[...document.querySelectorAll('[data-cart-line]')],count=lines.length,progress=Math.min(count*34,100),total=lines.reduce((sum,line)=>sum+(Number(line.dataset.price||0)*Number(line.querySelector('input')?.value||1)),0);document.querySelectorAll('.cartcount').forEach((badge)=>{badge.textContent=count;badge.hidden=count===0});const bar=drawer?.querySelector('.shipping-progress span'),state=drawer?.querySelector('.shipping-status-head span'),message=drawer?.querySelector('.shipping-status>p'),subtotal=drawer?.querySelector('.selection-total strong');if(bar)bar.style.width=progress+'%';if(state)state.textContent=progress===100?'Free shipping unlocked':count?'Almost there':'Add items';if(message)message.textContent=progress===100?'Your order qualifies for free shipping.':count?'Add more eligible items to unlock free shipping.':'Add eligible items to unlock free shipping.';if(subtotal)subtotal.textContent=total?`$${total.toFixed(2)}`:'$0.00';return count};
+const updateCartCount=()=>{const lines=[...document.querySelectorAll('[data-cart-line]')],count=lines.length,quantity=lines.reduce((sum,line)=>sum+Number(line.querySelector('input')?.value||1),0),progress=Math.min(quantity/12*100,100),total=lines.reduce((sum,line)=>sum+(Number(line.dataset.price||0)*Number(line.querySelector('input')?.value||1)),0);document.querySelectorAll('.cartcount').forEach((badge)=>{badge.textContent=count;badge.hidden=count===0});const bar=drawer?.querySelector('.shipping-progress span'),state=drawer?.querySelector('.shipping-status-head span'),message=drawer?.querySelector('.shipping-status>p'),subtotal=drawer?.querySelector('.selection-total strong');if(bar)bar.style.width=progress+'%';if(state)state.textContent=progress===100?'MOQ met':quantity?'Add items':'No items yet';if(message)message.textContent=progress===100?'Minimum order reached — ready for artwork review.':quantity?'Add '+Math.max(12-quantity,0)+' more units to reach the 12-unit MOQ.':'Add items to begin the 12-unit MOQ progress.';if(subtotal)subtotal.textContent=total?`$${total.toFixed(2)}`:'$0.00';return count};
 const showEmptyCart=()=>{const body=drawer?.querySelector('.selection-body');if(!body||body.querySelector('.cart-empty'))return;body.insertAdjacentHTML('beforeend','<p class="cart-empty">Your cart is empty. Add a product to start your order.</p>')};
 drawer?.querySelectorAll('[data-cart-line]').forEach((line)=>line.remove());updateCartCount();showEmptyCart();
 const addCartProduct=(trigger)=>{const body=drawer?.querySelector('.selection-body');if(!body)return;const source=trigger.closest('.product')||document.querySelector('.pinfo');const title=source?.querySelector('h3,h1')?.textContent.trim()||'Selected product',price=Number(source?.dataset.demoPrice||demoPrices[title]||29.95);const image=source?.querySelector('img')?.src||'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=300&q=80';const details=document.querySelector('.pinfo')?'Selected options / Artwork review':'Selected for quote';body.querySelector('.cart-empty')?.remove();body.insertAdjacentHTML('beforeend',`<article class="selection-item" data-cart-line data-price="${price}"><img src="${image}" alt="${title}"><div class="selection-copy"><h3>${title}</h3><p>${details}</p><button class="line-remove" type="button" aria-label="Remove ${title}" data-remove-cart>${icon.trash}</button><div class="selection-bottom"><div class="qty"><button data-minus aria-label="Decrease quantity">−</button><input value="1" aria-label="Quantity"><button data-plus aria-label="Increase quantity">+</button></div><strong>$${price.toFixed(2)} <small>per unit</small></strong></div></div></article>`);updateCartCount()};
@@ -328,6 +328,38 @@ productPrimaryCta?.addEventListener('click',(event)=>{
 syncProductJourney();
 if(document.title.includes('Screen Printing'))document.querySelector('.contactform')?.setAttribute('id','design-brief');
 
+/* Visible mock states for the eventual supplier feed and artwork review. */
+const planningBlock=document.querySelector('.pdp-planning');
+if(planningBlock){
+  planningBlock.insertAdjacentHTML('beforebegin','<section class="live-product-state" aria-live="polite"><div><span>Supplier feed</span><strong data-live-feed-status>Checking Bocini availability…</strong></div><div><span>MOQ</span><strong data-live-moq>—</strong></div><div><span>Lead time</span><strong data-live-lead>—</strong></div><button type="button" data-refresh-live-state>Refresh</button></section>');
+  const refreshLiveState=()=>{
+    const status=document.querySelector('[data-live-feed-status]'),moq=document.querySelector('[data-live-moq]'),lead=document.querySelector('[data-live-lead]');
+    if(status)status.textContent='Checking Bocini availability…';
+    if(moq)moq.textContent='—';
+    if(lead)lead.textContent='—';
+    setTimeout(()=>{if(status)status.textContent='Available to order';if(moq)moq.textContent='12 units';if(lead)lead.textContent='7–10 business days'},650);
+  };
+  document.querySelector('[data-refresh-live-state]')?.addEventListener('click',refreshLiveState);
+  refreshLiveState();
+}
+artworkFile?.addEventListener('change',()=>{
+  const file=artworkFile.files?.[0];
+  if(!artworkUploadStatus)return;
+  artworkUploadStatus.classList.toggle('is-ready',Boolean(file));
+  artworkUploadStatus.textContent=file?`${file.name} received — ready for the artwork review queue.`:'No file selected — we will review every file before production.';
+});
+const productAvailability={'Club Performance Tee':'Available to order','Team Hoodie':'Made to order · 7–10 days','Branded Bottle':'In stock · 2-day dispatch','Victory Cup':'Season stock · quote required'};
+document.querySelectorAll('.product').forEach((card)=>{
+  const title=card.querySelector('h3')?.textContent.trim(),label=productAvailability[title];
+  if(!label||card.querySelector('.product-live-state'))return;
+  const supplier=card.querySelector('.supplier,.featured-product-supplier');
+  if(!supplier)return;
+  const state=document.createElement('span');
+  state.className='product-live-state';
+  state.textContent=label;
+  supplier.insertAdjacentElement('afterend',state);
+});
+
 /* =========================================================
    BRIEF-CRITICAL PROTOTYPE STATES
    These UI states make the customer journey explicit while the real Shopify,
@@ -374,6 +406,29 @@ if(document.title.includes('Screen Printing'))document.querySelector('.contactfo
       if(status)status.textContent='With SportSense for dispatch';
     }
   });
+
+  if(document.title.includes('Screen Printing')){
+    const briefForm=document.querySelector('.contactform');
+    briefForm?.addEventListener('submit',(event)=>{
+      event.preventDefault();
+      if(briefForm.querySelector('.brief-success'))return;
+      briefForm.classList.add('is-submitted');
+      briefForm.insertAdjacentHTML('beforeend','<div class="brief-success" role="status"><strong>Design brief received</strong><span>Reference files and production details are now queued for the SportSense team. We will contact you before any production starts.</span></div>');
+    });
+  }
+
+  if(document.title.includes('Portal')){
+    const screenRow=[...document.querySelectorAll('.table tbody tr')].find((row)=>row.textContent.includes('Screen Printing'));
+    const orderCard=screenRow?.closest('.portalcard');
+    if(screenRow&&orderCard){
+      orderCard.insertAdjacentHTML('afterbegin','<div class="portal-status-demo"><div><span>Order status preview</span><strong>#SS-0995 · Screen Printing</strong></div><div><button type="button" data-portal-status="With supplier">Supplier</button><button type="button" data-portal-status="With printer">Printer</button><button type="button" class="is-selected" data-portal-status="With SportSense for dispatch">SportSense</button><button type="button" data-portal-status="Dispatched">Dispatched</button></div></div>');
+      orderCard.querySelectorAll('[data-portal-status]').forEach((button)=>button.addEventListener('click',()=>{
+        const status=screenRow.querySelectorAll('td')[1];
+        if(status)status.textContent=button.dataset.portalStatus||'';
+        orderCard.querySelectorAll('[data-portal-status]').forEach((item)=>item.classList.toggle('is-selected',item===button));
+      }));
+    }
+  }
 })();
 
 /* Animated homepage CTAs, adapted from the supplied Uiverse button treatment. */
