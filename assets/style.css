@@ -683,6 +683,10 @@ body{
   flex-direction:column;
 }
 
+.work-content .badge{
+  align-self:flex-start;
+}
+
 .work-content h3{
   font-size:23px;
   margin:14px 0 9px;
