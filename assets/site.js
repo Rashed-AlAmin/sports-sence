@@ -35,6 +35,30 @@ document.querySelectorAll('.nav').forEach((navigation,navIndex)=>{
   requestAnimationFrame(()=>setTab(activeIndex));
   window.addEventListener('resize',()=>{const current=tabs.findIndex((tab)=>tab.link.classList.contains('is-current'));setTab(current<0?activeIndex:current)},{passive:true});
 });
+document.querySelectorAll('.trustbar-in').forEach((bar)=>{
+  const items=[...bar.querySelectorAll('.trustitem')];
+  if(items.length<2)return;
+  bar.classList.add('trust-carousel');
+  let active=0,timer;
+  const show=(index)=>{
+    const next=(index+items.length)%items.length;
+    if(next===active)return;
+    const previous=active;
+    active=next;
+    items.forEach((item,itemIndex)=>{
+      item.classList.toggle('is-active',itemIndex===active);
+      item.classList.toggle('is-leaving',itemIndex===previous);
+    });
+  };
+  const start=()=>{
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    clearInterval(timer);
+    timer=setInterval(()=>show(active+1),3200);
+  };
+  items[0].classList.add('is-active');start();
+  bar.addEventListener('pointerenter',()=>clearInterval(timer));
+  bar.addEventListener('pointerleave',start);
+});
 const drawer=document.querySelector('.drawer'),back=document.querySelector('.backdrop');function openCart(){drawer?.style.removeProperty('transform');back?.style.removeProperty('opacity');drawer?.classList.add('open');back?.classList.add('open');document.body.style.overflow='hidden'}function closeCart(){drawer?.classList.remove('open');back?.classList.remove('open');drawer?.style.removeProperty('transform');back?.style.removeProperty('opacity');document.body.style.overflow=''}
 
 /* Shopify-style header actions: search, account, wishlist and cart drawer. */

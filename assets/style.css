@@ -1671,3 +1671,49 @@ main > :not(.homehero) .btn.secondary:hover{
     grid-template-columns:1fr;
   }
 }
+
+/* One-at-a-time announcement slider in the top trust bar. */
+.trustbar-in.trust-carousel{
+  position:relative;
+  display:block!important;
+  min-height:38px;
+  height:38px;
+  overflow:hidden;
+}
+
+.trust-carousel .trustitem{
+  position:absolute;
+  inset:0;
+  display:flex!important;
+  justify-content:center;
+  opacity:0;
+  transform:translateX(28px);
+  border:0!important;
+  pointer-events:none;
+  transition:opacity .42s ease,transform .42s ease;
+}
+
+.trust-carousel .trustitem.is-active{
+  opacity:1;
+  transform:translateX(0);
+}
+
+.trust-carousel .trustitem.is-leaving{
+  transform:translateX(-28px);
+}
+
+/* Dark local-support section with a light photo and location card for contrast. */
+.trust-story-section{
+  color:#fff!important;
+  background:#181818!important;
+}
+
+.trust-story-copy>p,
+.trust-story-section .trust-stat span{
+  color:rgba(255,255,255,.7)!important;
+}
+
+.trust-story-section .trust-stat{
+  border-color:rgba(255,255,255,.16)!important;
+  background:rgba(255,255,255,.06)!important;
+}
