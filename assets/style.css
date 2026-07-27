@@ -1699,6 +1699,8 @@ main > :not(.homehero) .btn.secondary:hover{
 }
 
 /* One-at-a-time announcement slider in the top trust bar. */
+.pdp-upload{display:grid;gap:7px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(196,141,40,.22);font-size:13px;font-weight:800}.pdp-upload input{width:100%;padding:9px;border:1px dashed #d9a849;border-radius:7px;background:#fff;font:inherit;font-size:12px;cursor:pointer}.pdp-upload input:disabled{cursor:not-allowed;opacity:.6}.pdp-upload small,.pdp-upload-status{color:var(--muted);font-size:12px;font-weight:500;line-height:1.45}.pdp-upload-status{margin:9px 0 0}
+
 .trustbar-in.trust-carousel{
   position:relative;
   display:block!important;
@@ -1772,3 +1774,44 @@ main > :not(.homehero) .btn.secondary:hover{
   border-color:rgba(255,255,255,.16)!important;
   background:rgba(255,255,255,.06)!important;
 }
+
+/* FAQ accordion: clear affordance plus a smooth open/close transition. */
+.faqquestion{
+  align-items:center;
+  cursor:pointer;
+  transition:background .2s ease,color .2s ease;
+}
+.faqquestion:hover{background:rgba(245,166,35,.09)}
+.faqquestion:focus-visible{outline:2px solid var(--orange2);outline-offset:-2px}
+.faqquestion span:last-child{
+  display:grid;
+  width:28px;
+  height:28px;
+  flex:0 0 auto;
+  place-items:center;
+  border-radius:50%;
+  color:var(--ink);
+  background:var(--soft);
+  font-size:18px;
+  line-height:1;
+  transition:background .2s ease,color .2s ease,transform .25s ease;
+}
+.faqquestion:hover span:last-child{color:#fff;background:var(--orange2);transform:scale(1.08)}
+.faqanswer{
+  display:block!important;
+  max-height:0;
+  overflow:hidden;
+  padding:0 18px!important;
+  opacity:0;
+  transform:translateY(-6px);
+  transition:max-height .34s ease,padding .28s ease,opacity .2s ease,transform .28s ease;
+}
+.faqitem.open .faqanswer{
+  max-height:180px;
+  padding:0 18px 18px!important;
+  opacity:1;
+  transform:translateY(0);
+}
+.faqitem.open .faqquestion span:last-child{color:#fff;background:var(--ink)}
+
+.cartcount[hidden]{display:none!important}
