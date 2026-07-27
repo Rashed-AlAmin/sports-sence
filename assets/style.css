@@ -1457,3 +1457,217 @@ main > :not(.homehero) .btn.secondary:hover{
   border-color:var(--ink)!important;
   box-shadow:none;
 }
+
+/* Category overview: compact split-card layout, keeping the SportSense palette and type. */
+.category-showcase-section .container{
+  display:grid;
+  grid-template-columns:minmax(280px,.62fr) minmax(0,1.38fr);
+  align-items:stretch;
+  gap:36px;
+}
+
+.category-showcase-head{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:30px;
+  margin:0;
+  padding:20px 0;
+}
+
+
+.category-showcase-intro{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:22px;
+  margin-top:auto;
+  padding:0;
+}
+
+.category-showcase-intro p{
+  max-width:310px;
+  margin:0;
+}
+
+.category-overview-link{
+  padding:0;
+}
+
+.category-showcase-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+
+.category-showcase-card,
+.category-showcase-card--apparel,
+.category-showcase-card--promo,
+.category-showcase-card--screen,
+.category-showcase-card--trophies{
+  display:grid!important;
+  grid-column:auto!important;
+  grid-template-columns:minmax(0,1.2fr) minmax(145px,.8fr)!important;
+  grid-template-rows:none!important;
+  min-height:450px!important;
+  color:var(--ink)!important;
+  background:#fff!important;
+  border-color:var(--line)!important;
+  border-radius:18px;
+  box-shadow:0 9px 28px rgba(26,26,26,.045);
+}
+
+.category-showcase-card--apparel .category-showcase-content,
+.category-showcase-card--promo .category-showcase-content,
+.category-showcase-card--screen .category-showcase-content,
+.category-showcase-card--trophies .category-showcase-content{
+  order:1;
+}
+
+.category-showcase-card--apparel .category-showcase-media,
+.category-showcase-card--promo .category-showcase-media,
+.category-showcase-card--screen .category-showcase-media,
+.category-showcase-card--trophies .category-showcase-media{
+  order:2;
+  align-self:stretch;
+  height:100%;
+  border-radius:0 17px 17px 0!important;
+  clip-path:polygon(17% 0,100% 0,100% 100%,0 100%,17% 50%);
+}
+
+.category-showcase-content{
+  padding:23px 21px;
+  gap:17px;
+}
+
+.category-card-number,
+.category-showcase-card--trophies .category-card-number{
+  color:var(--orange2)!important;
+}
+
+.category-card-supplier,
+.category-showcase-card--trophies .category-card-supplier{
+  color:#8b5800!important;
+  background:rgba(245,166,35,.16)!important;
+  border:0!important;
+}
+
+.category-showcase-content h3{
+  max-width:260px;
+  margin-bottom:9px;
+}
+
+.category-showcase-content p,
+.category-showcase-card--trophies .category-showcase-content p{
+  color:var(--muted)!important;
+}
+
+.category-card-chips span,
+.category-showcase-card--trophies .category-card-chips span{
+  color:var(--muted)!important;
+  background:#fff!important;
+  border-color:var(--line)!important;
+}
+
+.category-card-arrow,
+.category-showcase-card--trophies .category-card-arrow{
+  width:38px;
+  height:38px;
+  color:#fff!important;
+  background:var(--ink)!important;
+  font-size:18px;
+}
+
+.category-card-arrow svg{
+  width:18px;
+  height:18px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.category-showcase-card:hover .category-card-arrow{
+  color:var(--ink)!important;
+  background:var(--orange)!important;
+}
+
+.category-photo-label,
+.category-research-note{
+  display:none;
+}
+
+@media(max-width:1080px){
+  .category-showcase-section .container{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+
+  .category-showcase-head{
+    display:grid;
+    grid-template-columns:1fr minmax(260px,.7fr);
+    align-items:end;
+    gap:34px;
+    padding:0;
+  }
+
+  .category-showcase-intro{
+    margin:0;
+  }
+}
+
+@media(max-width:680px){
+  .category-showcase-head,
+  .category-showcase-grid{
+    grid-template-columns:1fr;
+  }
+
+  .category-showcase-head{
+    gap:20px;
+  }
+
+  .category-showcase-card,
+  .category-showcase-card--apparel,
+  .category-showcase-card--promo,
+  .category-showcase-card--screen,
+  .category-showcase-card--trophies{
+    grid-template-columns:minmax(0,1.12fr) minmax(125px,.88fr)!important;
+    min-height:255px!important;
+  }
+
+  .category-showcase-content{
+    padding:20px 18px;
+  }
+}
+
+@media(max-width:820px){
+  .category-showcase-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .category-showcase-card,
+  .category-showcase-card--apparel,
+  .category-showcase-card--promo,
+  .category-showcase-card--screen,
+  .category-showcase-card--trophies{
+    grid-template-rows:none!important;
+  }
+
+  .category-showcase-card--apparel .category-showcase-content,
+  .category-showcase-card--promo .category-showcase-content,
+  .category-showcase-card--screen .category-showcase-content,
+  .category-showcase-card--trophies .category-showcase-content,
+  .category-showcase-card--apparel .category-showcase-media,
+  .category-showcase-card--promo .category-showcase-media,
+  .category-showcase-card--screen .category-showcase-media,
+  .category-showcase-card--trophies .category-showcase-media{
+    grid-row:auto!important;
+  }
+}
+
+@media(max-width:680px){
+  .category-showcase-grid{
+    grid-template-columns:1fr;
+  }
+}
