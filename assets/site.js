@@ -1,5 +1,5 @@
 
-const menu=document.querySelector('.menubtn'),nav=document.querySelector('.nav');if(menu&&nav){menu.addEventListener('click',()=>nav.classList.toggle('open'));nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')))}
+const menu=document.querySelector('.menubtn'),nav=document.querySelector('.nav');
 document.querySelectorAll('.nav').forEach((navigation,navIndex)=>{
   const originalLinks=[...navigation.querySelectorAll('a')];
   if(!originalLinks.length)return;
@@ -35,6 +35,43 @@ document.querySelectorAll('.nav').forEach((navigation,navIndex)=>{
   requestAnimationFrame(()=>setTab(activeIndex));
   window.addEventListener('resize',()=>{const current=tabs.findIndex((tab)=>tab.link.classList.contains('is-current'));setTab(current<0?activeIndex:current)},{passive:true});
 });
+
+/* Mobile navigation opens as a drawer, with its own backdrop and close control. */
+if(menu&&nav){
+  const menuBackdrop=document.createElement('button');
+  menuBackdrop.className='menu-drawer-backdrop';
+  menuBackdrop.type='button';
+  menuBackdrop.setAttribute('aria-label','Close menu');
+  document.body.append(menuBackdrop);
+  const menuClose=document.createElement('button');
+  menuClose.className='menu-drawer-close';
+  menuClose.type='button';
+  menuClose.setAttribute('aria-label','Close menu');
+  menuClose.textContent='×';
+  nav.prepend(menuClose);
+  menu.setAttribute('aria-label','Open menu');
+  menu.setAttribute('aria-expanded','false');
+  const closeMenu=()=>{
+    nav.classList.remove('open');
+    menuBackdrop.classList.remove('is-open');
+    document.body.classList.remove('menu-drawer-open');
+    menu.setAttribute('aria-expanded','false');
+    menu.setAttribute('aria-label','Open menu');
+  };
+  const openMenu=()=>{
+    nav.classList.add('open');
+    menuBackdrop.classList.add('is-open');
+    document.body.classList.add('menu-drawer-open');
+    menu.setAttribute('aria-expanded','true');
+    menu.setAttribute('aria-label','Close menu');
+  };
+  menu.addEventListener('click',()=>nav.classList.contains('open')?closeMenu():openMenu());
+  menuClose.addEventListener('click',closeMenu);
+  menuBackdrop.addEventListener('click',closeMenu);
+  nav.addEventListener('click',(event)=>{if(event.target.closest('a'))closeMenu()});
+  document.addEventListener('keydown',(event)=>{if(event.key==='Escape'&&nav.classList.contains('open'))closeMenu()});
+  window.addEventListener('resize',()=>{if(window.innerWidth>920)closeMenu()},{passive:true});
+}
 
 /* Product-category shortcuts live below the two catalogue tabs on desktop. */
 const categorySubnavigation={

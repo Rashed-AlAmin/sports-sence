@@ -1946,3 +1946,17 @@ main > :not(.homehero) .btn.secondary:hover{
   .pdp-review-card footer{flex-wrap:wrap}
   .portalnav a,.footer a{overflow-wrap:anywhere}
 }
+
+/* Sliding mobile navigation drawer. */
+.menu-drawer-backdrop,.menu-drawer-close{display:none}
+@media(max-width:920px){
+  body.menu-drawer-open{overflow:hidden}
+  .menu-drawer-backdrop{position:fixed;inset:0;z-index:180;display:block;border:0;background:rgba(8,8,10,.58);opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease;cursor:pointer}
+  .menu-drawer-backdrop.is-open{opacity:1;visibility:visible}
+  .nav.ss-tab-nav{position:fixed;inset:0 0 0 auto;z-index:181;display:flex;width:min(86vw,360px);height:100dvh;margin:0;padding:88px 25px 32px;background:#151515;color:#fff;box-shadow:-18px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;pointer-events:none;overflow-y:auto;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility .32s}
+  .nav.ss-tab-nav.open{display:flex;transform:translateX(0);visibility:visible;pointer-events:auto}
+  .nav.ss-tab-nav .ss-tab-menu{display:flex;width:100%;padding:0;gap:0;flex-direction:column}
+  .nav.ss-tab-nav .ss-tab-label{display:block;width:100%;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.13);color:#fff;font-size:15px;font-weight:900;letter-spacing:.02em;text-align:left;text-transform:uppercase}
+  .nav.ss-tab-nav .ss-tab-label:hover,.nav.ss-tab-nav .ss-tab-label:focus-visible,.nav.ss-tab-nav .ss-tab-label.is-current{color:var(--orange);background:transparent}
+  .menu-drawer-close{position:absolute;top:22px;right:20px;z-index:2;display:grid;width:42px;height:42px;place-items:center;border:0;border-radius:50%;color:var(--ink);background:#fff;font-size:29px;line-height:1;cursor:pointer}
+}
