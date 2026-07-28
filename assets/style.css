@@ -1952,7 +1952,7 @@ main > :not(.homehero) .btn.secondary:hover{
 @media(max-width:920px){
   body.menu-drawer-open{overflow:hidden;touch-action:none}
   .menu-drawer-backdrop{position:fixed;inset:0;z-index:180;display:block;border:0;background:rgba(8,8,10,.14);backdrop-filter:blur(1px);opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease;cursor:pointer}
-  .menu-drawer-backdrop.is-open{opacity:1;visibility:visible}
+
   .nav.ss-tab-nav{position:fixed;inset:0 0 0 auto;z-index:181;display:flex;width:min(86vw,360px);height:100dvh;margin:0;padding:88px 25px 32px;background:#151515;color:#fff;box-shadow:-18px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;pointer-events:none;overflow-y:auto;touch-action:pan-y;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility .32s}
   .nav.ss-tab-nav.open{display:flex;transform:translateX(0);visibility:visible;pointer-events:auto}
   .nav.ss-tab-nav .ss-tab-menu{display:flex;width:100%;padding:0;gap:7px;flex-direction:column}
