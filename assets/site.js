@@ -51,17 +51,29 @@ if(menu&&nav){
   nav.prepend(menuClose);
   menu.setAttribute('aria-label','Open menu');
   menu.setAttribute('aria-expanded','false');
+  let menuScrollY=0;
   const closeMenu=()=>{
+    const wasOpen=document.body.classList.contains('menu-drawer-open');
     nav.classList.remove('open');
     menuBackdrop.classList.remove('is-open');
     document.body.classList.remove('menu-drawer-open');
+    if(wasOpen){
+      document.body.style.position='';
+      document.body.style.top='';
+      document.body.style.width='';
+      window.scrollTo(0,menuScrollY);
+    }
     menu.setAttribute('aria-expanded','false');
     menu.setAttribute('aria-label','Open menu');
   };
   const openMenu=()=>{
+    menuScrollY=window.scrollY;
     nav.classList.add('open');
     menuBackdrop.classList.add('is-open');
     document.body.classList.add('menu-drawer-open');
+    document.body.style.position='fixed';
+    document.body.style.top=`-${menuScrollY}px`;
+    document.body.style.width='100%';
     menu.setAttribute('aria-expanded','true');
     menu.setAttribute('aria-label','Close menu');
   };
