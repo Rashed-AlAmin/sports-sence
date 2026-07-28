@@ -1966,7 +1966,7 @@ main > :not(.homehero) .btn.secondary:hover{
   .ss-mobile-submenu-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
   .nav.ss-tab-nav .ss-category-subnav{position:static;display:grid!important;width:auto;max-height:0;gap:0;margin:0 0 0 14px;padding:0;overflow:hidden;visibility:visible;opacity:0;pointer-events:none;transform:none;border:0;border-left:1px solid rgba(245,166,35,.6);border-radius:0;background:transparent;box-shadow:none;transition:max-height .3s ease,margin .3s ease,opacity .22s ease}
   .nav.ss-tab-nav .ss-category-subnav.is-open{max-height:480px;margin:2px 0 8px 14px;opacity:1;pointer-events:auto}
-  .nav.ss-tab-nav .ss-category-subnav a{padding:12px 14px;color:rgba(255,255,255,.7);font-size:13px;font-weight:800;text-transform:uppercase;white-space:normal}
+  .nav.ss-tab-nav .ss-category-subnav a{padding:12px 14px;color:rgba(255,255,255,.7);font-size:13px;font-weight:800;text-align:left;text-transform:uppercase;white-space:normal}
   .nav.ss-tab-nav .ss-category-subnav a:hover,.nav.ss-tab-nav .ss-category-subnav a:focus-visible{color:var(--orange);background:transparent}
   .menu-drawer-close{position:absolute;top:22px;right:20px;z-index:2;display:grid;width:42px;height:42px;place-items:center;border:0;border-radius:50%;color:var(--ink);background:#fff;font-size:29px;line-height:1;cursor:pointer}
 }
