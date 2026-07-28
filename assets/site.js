@@ -55,6 +55,8 @@ if(menu&&nav){
   const closeMenu=()=>{
     const wasOpen=document.body.classList.contains('menu-drawer-open');
     nav.classList.remove('open');
+    nav.querySelectorAll('.ss-category-subnav.is-open').forEach((panel)=>panel.classList.remove('is-open'));
+    nav.querySelectorAll('.ss-mobile-submenu-toggle[aria-expanded="true"]').forEach((toggle)=>toggle.setAttribute('aria-expanded','false'));
     menuBackdrop.classList.remove('is-open');
     document.body.classList.remove('menu-drawer-open');
     if(wasOpen){
@@ -104,7 +106,16 @@ document.querySelectorAll('.nav.ss-tab-nav').forEach((navigation)=>{
     panel.className='ss-category-subnav';
     panel.setAttribute('aria-label',`${link.textContent.trim()} categories`);
     panel.innerHTML=entries.map(([label,href])=>`<a href="${subnavBasePath}${href}">${label}</a>`).join('');
-    tabMenu.append(panel);menus.push(panel);
+    const group=document.createElement('div');
+    group.className='ss-mobile-nav-group';
+    const toggle=document.createElement('button');
+    toggle.className='ss-mobile-submenu-toggle';
+    toggle.type='button';
+    toggle.setAttribute('aria-label',`Show ${link.textContent.trim()} categories`);
+    toggle.setAttribute('aria-expanded','false');
+    toggle.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>';
+    tabMenu.insertBefore(group,link);
+    group.append(link,toggle,panel);menus.push(panel);
     let closeTimer;
     const open=()=>{
       clearTimeout(closeTimer);
@@ -122,6 +133,16 @@ document.querySelectorAll('.nav.ss-tab-nav').forEach((navigation)=>{
     link.addEventListener('pointerleave',close);
     panel.addEventListener('pointerenter',()=>clearTimeout(closeTimer));
     panel.addEventListener('pointerleave',close);
+    toggle.addEventListener('click',(event)=>{
+      event.preventDefault();
+      const willOpen=!panel.classList.contains('is-open');
+      menus.forEach((menu)=>{
+        menu.classList.remove('is-open');
+        menu.closest('.ss-mobile-nav-group')?.querySelector('.ss-mobile-submenu-toggle')?.setAttribute('aria-expanded','false');
+      });
+      panel.classList.toggle('is-open',willOpen);
+      toggle.setAttribute('aria-expanded',String(willOpen));
+    });
   });
   header.addEventListener('pointerleave',()=>{
     menus.forEach((menu)=>menu.classList.remove('is-open'));
